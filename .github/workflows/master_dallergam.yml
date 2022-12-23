@@ -32,6 +32,16 @@ jobs:
           dotnet build --configuration Release --output ./output
           popd
 
+  #substitute production settings entries to settings json file
+      - name: App Settings Variable Substitution
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: '**/settings.json'
+        env:
+          OpenAi.ApiKey: ${{ secrets.OPENAI_APIKEY }}
+          InstaOptions.Username: ${{ secrets.INSTA_OPTIONS_USERNAME }}
+          InstaOptions.Password: ${{ secrets.INSTA_OPTIONS_PASSWORD }}
+
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
         id: fa
