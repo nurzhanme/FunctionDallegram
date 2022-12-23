@@ -5,6 +5,7 @@ using InstagramApiSharp.API;
 using InstagramApiSharp.API.Builder;
 using InstagramApiSharp.Classes;
 using InstagramApiSharp.Classes.Models;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace FunctionDallegram.Services;
@@ -13,17 +14,23 @@ public class InstaService
 {
     private IInstaApi? _instaApi;
     private readonly InstaOptions _instaOptions;
+    private readonly ILogger<InstaService> _logger;
 
-    public InstaService(IOptions<InstaOptions> instaOptions)
+    public InstaService(IOptions<InstaOptions> instaOptions, ILogger<InstaService> logger)
     {
         _instaOptions = instaOptions?.Value ?? throw new ArgumentNullException(nameof(instaOptions));
+        _logger = logger;
     }
 
     public async Task<string> Login()
     {
+        var username = _instaOptions.Username;
+
+        _logger.LogInformation("login started by username = " + username);
+
 
         _instaApi = InstaApiBuilder.CreateBuilder()
-            .SetUser(UserSessionData.ForUsername(_instaOptions.Username).WithPassword(_instaOptions.Password))
+            .SetUser(UserSessionData.ForUsername(username).WithPassword(_instaOptions.Password))
             .SetRequestDelay(RequestDelay.FromSeconds(2, 2))
             .Build();
 
@@ -56,6 +63,8 @@ public class InstaService
 
     public async Task<string> PostPhoto(string imageUrl, string caption)
     {
+        _logger.LogInformation("PostPhoto");
+
         if (string.IsNullOrWhiteSpace(imageUrl))
         {
             throw new ArgumentException($"{nameof(imageUrl)} is null or empty", nameof(imageUrl));
