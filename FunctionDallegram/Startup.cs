@@ -4,7 +4,6 @@ using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenAI.GPT3.Extensions;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
 
 [assembly: FunctionsStartup(typeof(FunctionDallegram.Startup))]
