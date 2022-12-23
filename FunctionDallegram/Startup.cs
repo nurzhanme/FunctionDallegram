@@ -36,6 +36,7 @@ public class Startup : FunctionsStartup
             new ConfigurationBuilder()
                 .SetBasePath(applicationRootPath)
                 .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("settings.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables()
                 .Build();
 
