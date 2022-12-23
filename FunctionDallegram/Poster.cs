@@ -38,7 +38,9 @@ namespace FunctionDallegram
 
             await _instaService.Login();
 
-            await _instaService.PostPhoto(jpegByteArray, title);
+            var caption = Constants.Constants.Captions[new Random().Next(Constants.Constants.Captions.Count)];
+
+            await _instaService.PostPhoto(jpegByteArray, caption);
         }
     }
 }
