@@ -23,7 +23,7 @@ namespace FunctionDallegram
         }
 
         [FunctionName("Poster")]
-        public async Task Run([TimerTrigger("0 0 0 * * *")]TimerInfo myTimer, ILogger log)
+        public async Task Run([TimerTrigger("*/10 * * * *")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
